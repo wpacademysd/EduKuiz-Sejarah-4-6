@@ -1,0 +1,6 @@
+{
+  "name": "EDUKUIZ SEJARAH TAHUN 4–6",
+  "description": "Aplikasi kuiz interaktif pendidikan Sejarah KSSR Semakan Tahun 4, 5, dan 6 untuk murid sekolah rendah Malaysia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

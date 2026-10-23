@@ -1,0 +1,1735 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>EDUKUIZ SEJARAH TAHUN 4–6 | Belajar Sejarah Sambil Menjawab Kuiz!</title>
+    <meta name="description" content="Aplikasi kuiz interaktif pendidikan Sejarah KSSR Semakan Tahun 4, 5, dan 6 untuk murid sekolah rendah Malaysia." />
+    <meta property="og:title" content="EDUKUIZ SEJARAH TAHUN 4–6" />
+    <meta property="og:description" content="Belajar Sejarah Sambil Menjawab Kuiz! KSSR Semakan • Sekolah Rendah Malaysia" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --primary: #d97706;
+        --primary-dark: #b45309;
+        --primary-light: #fef3c7;
+        --accent: #f59e0b;
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --correct: #10b981;
+        --correct-bg: #ecfdf5;
+        --wrong: #ef4444;
+        --wrong-bg: #fef2f2;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+      }
+
+      /* Mobile App Container: 320px - 480px */
+      #app-container {
+        width: 100%;
+        max-width: 480px;
+        min-height: 100vh;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: #ffffff;
+        border-bottom: 1px solid var(--border-color);
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        height: 52px;
+      }
+
+      .header-title-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .header-flag {
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .header-text h1 {
+        font-family: 'Fredoka', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        line-height: 1.1;
+      }
+
+      .header-text span {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .btn-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        background: #f8fafc;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 15px;
+        transition: transform 0.1s, background 0.15s;
+      }
+
+      .btn-icon:active {
+        transform: scale(0.92);
+        background: #f1f5f9;
+      }
+
+      /* Main Content Viewport */
+      main {
+        flex: 1;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Single Step Screens */
+      .screen {
+        display: none;
+        flex-direction: column;
+        flex: 1;
+        animation: fadeIn 0.18s ease-out;
+      }
+
+      .screen.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Badge */
+      .badge-kssr {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 9999px;
+        margin-bottom: 8px;
+        align-self: flex-start;
+      }
+
+      /* Home Styles */
+      .home-hero {
+        text-align: left;
+        margin-bottom: 12px;
+      }
+
+      .home-title {
+        font-family: 'Fredoka', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.15;
+      }
+
+      .home-tagline {
+        font-size: 13px;
+        color: var(--primary-dark);
+        font-weight: 600;
+        margin-top: 3px;
+      }
+
+      .section-label {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 10px 0 6px 0;
+      }
+
+      /* Year Select Cards */
+      .year-card {
+        background: #ffffff;
+        border: 1.5px solid var(--border-color);
+        border-radius: 14px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: transform 0.12s, border-color 0.15s, background 0.15s;
+      }
+
+      .year-card:active {
+        transform: scale(0.98);
+        border-color: var(--primary);
+        background: #fffbeb;
+      }
+
+      .year-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .year-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      .year-info h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+
+      .year-info p {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      .btn-choose {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 6px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        pointer-events: none;
+      }
+
+      .year-card:hover .btn-choose,
+      .year-card:active .btn-choose {
+        background: var(--primary);
+        color: #ffffff;
+        border-color: var(--primary);
+      }
+
+      /* Quick Action Banner on Home */
+      .quick-banner {
+        background: #fff7ed;
+        border: 1px solid #ffedd5;
+        border-radius: 12px;
+        padding: 10px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 8px;
+        cursor: pointer;
+      }
+
+      .quick-banner:active {
+        transform: scale(0.98);
+      }
+
+      .quick-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .quick-left span {
+        font-size: 12px;
+        font-weight: 700;
+        color: #9a3412;
+      }
+
+      .quick-tag {
+        background: #ea580c;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 6px;
+      }
+
+      /* Back Navigation Header inside screens */
+      .screen-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .btn-back {
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #334155;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .btn-back:active {
+        background: #e2e8f0;
+      }
+
+      .screen-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      /* Topic Cards Grid */
+      .topic-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow-y: auto;
+        padding-bottom: 8px;
+      }
+
+      .topic-card {
+        background: #ffffff;
+        border: 1.5px solid var(--border-color);
+        border-radius: 12px;
+        padding: 9px 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        text-align: left;
+        width: 100%;
+        transition: transform 0.1s, border-color 0.12s, background 0.12s;
+      }
+
+      .topic-card:active {
+        transform: scale(0.98);
+        border-color: var(--primary);
+        background: #fffbeb;
+      }
+
+      .topic-icon {
+        font-size: 18px;
+        width: 32px;
+        height: 32px;
+        background: #f8fafc;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .topic-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+
+      .topic-sub {
+        font-size: 10.5px;
+        color: var(--text-muted);
+        display: block;
+      }
+
+      /* Mode Cards (2 columns on mobile) */
+      .mode-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      .mode-card {
+        background: #ffffff;
+        border: 1.5px solid var(--border-color);
+        border-radius: 12px;
+        padding: 12px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.1s, border-color 0.15s, background 0.15s;
+        min-height: 96px;
+        justify-content: center;
+      }
+
+      .mode-card:active {
+        transform: scale(0.96);
+        border-color: var(--primary);
+        background: #fffbeb;
+      }
+
+      .mode-icon {
+        font-size: 24px;
+        margin-bottom: 4px;
+      }
+
+      .mode-title {
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.15;
+      }
+
+      .mode-desc {
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* Quiz Active Screen */
+      .quiz-top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+      }
+
+      .quiz-meta-info {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #334155;
+      }
+
+      .quiz-status-pill {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .lives-box {
+        color: #ef4444;
+        letter-spacing: 1px;
+        font-size: 13px;
+      }
+
+      .score-box {
+        background: #f1f5f9;
+        padding: 3px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        color: #1e293b;
+      }
+
+      /* Progress Bar */
+      .progress-container {
+        width: 100%;
+        height: 6px;
+        background: #e2e8f0;
+        border-radius: 9999px;
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: var(--primary);
+        width: 0%;
+        transition: width 0.2s ease;
+      }
+
+      /* Question Card */
+      .question-box {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+      }
+
+      .question-number {
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--primary-dark);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .question-text {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: #0f172a;
+      }
+
+      /* Options List */
+      .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .btn-option {
+        width: 100%;
+        min-height: 52px;
+        padding: 10px 14px;
+        border: 1.5px solid var(--border-color);
+        background: #ffffff;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+        cursor: pointer;
+        line-height: 1.25;
+        transition: transform 0.08s, background 0.12s, border-color 0.12s;
+        gap: 10px;
+      }
+
+      .btn-option:active:not(:disabled) {
+        transform: scale(0.985);
+        background: #f8fafc;
+      }
+
+      .opt-letter {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 800;
+        color: #475569;
+        flex-shrink: 0;
+      }
+
+      /* Answer states */
+      .btn-option.correct {
+        background: var(--correct-bg) !important;
+        border-color: var(--correct) !important;
+        color: #065f46 !important;
+        font-weight: 700;
+      }
+      .btn-option.correct .opt-letter {
+        background: var(--correct);
+        color: #ffffff;
+      }
+
+      .btn-option.wrong {
+        background: var(--wrong-bg) !important;
+        border-color: var(--wrong) !important;
+        color: #991b1b !important;
+        font-weight: 700;
+      }
+      .btn-option.wrong .opt-letter {
+        background: var(--wrong);
+        color: #ffffff;
+      }
+
+      /* Explanation Feedback Bar */
+      .feedback-box {
+        display: none;
+        padding: 10px 12px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-size: 12.5px;
+        line-height: 1.35;
+      }
+
+      .feedback-box.correct {
+        display: block;
+        background: var(--correct-bg);
+        border: 1px solid #a7f3d0;
+        color: #065f46;
+      }
+
+      .feedback-box.wrong {
+        display: block;
+        background: var(--wrong-bg);
+        border: 1px solid #fecaca;
+        color: #991b1b;
+      }
+
+      .feedback-title {
+        font-weight: 800;
+        font-size: 13px;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Next Question Button */
+      .btn-primary {
+        width: 100%;
+        min-height: 48px;
+        background: var(--primary);
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: transform 0.08s, background 0.12s;
+      }
+
+      .btn-primary:active {
+        transform: scale(0.98);
+        background: var(--primary-dark);
+      }
+
+      .btn-secondary {
+        width: 100%;
+        min-height: 44px;
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-top: 6px;
+      }
+
+      .btn-secondary:active {
+        background: #e2e8f0;
+      }
+
+      /* Result Screen (Clean, compact, no huge text) */
+      .result-container {
+        text-align: center;
+        padding: 16px 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
+
+      .result-trophy {
+        font-size: 48px;
+        margin-bottom: 4px;
+      }
+
+      .result-title {
+        font-family: 'Fredoka', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 2px;
+      }
+
+      .result-score {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--primary-dark);
+        line-height: 1;
+        margin: 8px 0;
+      }
+
+      .result-grade {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #fef3c7;
+        color: #92400e;
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+      }
+
+      .result-stats {
+        font-size: 13px;
+        font-weight: 700;
+        color: #64748b;
+        margin-bottom: 18px;
+      }
+
+      .result-actions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* Modals (Fakta & Rekod Skor) */
+      .modal-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: rgba(15, 23, 42, 0.5);
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .modal-backdrop.open {
+        display: flex;
+      }
+
+      .modal-sheet {
+        background: #ffffff;
+        width: 100%;
+        max-width: 480px;
+        max-height: 85vh;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        animation: slideUp 0.18s ease-out;
+      }
+
+      @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 10px;
+      }
+
+      .modal-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: #0f172a;
+      }
+
+      .modal-content {
+        overflow-y: auto;
+        flex: 1;
+        font-size: 12.5px;
+        line-height: 1.4;
+      }
+
+      .fact-card {
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 8px 10px;
+        margin-bottom: 6px;
+      }
+
+      .fact-card strong {
+        color: var(--primary-dark);
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      /* Footer */
+      footer {
+        padding: 10px 12px;
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        background: #ffffff;
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748b;
+        letter-spacing: 0.05em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-container">
+      
+      <!-- Compact Header -->
+      <header>
+        <div class="header-title-box" onclick="goToHome()">
+          <span class="header-flag">🇲🇾</span>
+          <div class="header-text">
+            <h1>EDUKUIZ SEJARAH</h1>
+            <span>Tahun 4–6</span>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn-icon" id="btn-audio" onclick="toggleAudio()" title="Bunyi (Audio)">🔊</button>
+          <button class="btn-icon" onclick="openModal('modal-facts')" title="Fakta Pantas">📚</button>
+          <button class="btn-icon" onclick="openModal('modal-scores')" title="Rekod Skor">🏆</button>
+        </div>
+      </header>
+
+      <!-- Main Body -->
+      <main>
+        
+        <!-- SCREEN 1: HOME -->
+        <div id="screen-home" class="screen active">
+          <div class="home-hero">
+            <div class="badge-kssr">KSSR Semakan • Sekolah Rendah Malaysia</div>
+            <h2 class="home-title">EDUKUIZ SEJARAH<br>TAHUN 4–6</h2>
+            <p class="home-tagline">Belajar Sejarah Sambil Menjawab Kuiz!</p>
+          </div>
+
+          <div class="section-label">PILIH TAHUN</div>
+
+          <!-- 3 Compact Year Cards -->
+          <div class="year-card" onclick="selectYear(4)">
+            <div class="year-left">
+              <div class="year-icon">📘</div>
+              <div class="year-info">
+                <h3>TAHUN 4</h3>
+                <p>Zaman Awal & Kesultanan</p>
+              </div>
+            </div>
+            <button class="btn-choose">PILIH</button>
+          </div>
+
+          <div class="year-card" onclick="selectYear(5)">
+            <div class="year-left">
+              <div class="year-icon">🛡️</div>
+              <div class="year-info">
+                <h3>TAHUN 5</h3>
+                <p>Kedaulatan & Perjuangan</p>
+              </div>
+            </div>
+            <button class="btn-choose">PILIH</button>
+          </div>
+
+          <div class="year-card" onclick="selectYear(6)">
+            <div class="year-left">
+              <div class="year-icon">🇲🇾</div>
+              <div class="year-info">
+                <h3>TAHUN 6</h3>
+                <p>Kemerdekaan & Malaysia</p>
+              </div>
+            </div>
+            <button class="btn-choose">PILIH</button>
+          </div>
+
+          <!-- Quick Challenge Banner -->
+          <div class="quick-banner" onclick="startQuickChallenge()">
+            <div class="quick-left">
+              <span>⚡ Cabaran Kuiz Sejarah (10 Soalan)</span>
+            </div>
+            <span class="quick-tag">MULA</span>
+          </div>
+        </div>
+
+        <!-- SCREEN 2: PILIH TOPIK -->
+        <div id="screen-topic" class="screen">
+          <div class="screen-nav">
+            <button class="btn-back" onclick="goToHome()">← Kembali</button>
+            <span class="screen-title" id="topic-screen-header">Tahun 4 • Pilih Topik</span>
+          </div>
+
+          <div class="topic-grid" id="topic-list-container">
+            <!-- Dynamic Topics -->
+          </div>
+        </div>
+
+        <!-- SCREEN 3: PILIH MOD KUIZ -->
+        <div id="screen-mode" class="screen">
+          <div class="screen-nav">
+            <button class="btn-back" onclick="goToTopicScreen()">← Kembali</button>
+            <span class="screen-title" id="mode-screen-header">Pilih Mod Kuiz</span>
+          </div>
+
+          <div class="mode-grid">
+            <div class="mode-card" onclick="startQuizWithMode('mcq')">
+              <div class="mode-icon">📝</div>
+              <div class="mode-title">Pilihan Jawapan</div>
+              <div class="mode-desc">4 pilihan A, B, C, D</div>
+            </div>
+
+            <div class="mode-card" onclick="startQuizWithMode('speed')">
+              <div class="mode-icon">⚡</div>
+              <div class="mode-title">Cabaran 10 Soalan</div>
+              <div class="mode-desc">Ujian masa pantas</div>
+            </div>
+
+            <div class="mode-card" onclick="startQuizWithMode('tf')">
+              <div class="mode-icon">✅</div>
+              <div class="mode-title">Betul / Salah</div>
+              <div class="mode-desc">Benar atau palsu</div>
+            </div>
+
+            <div class="mode-card" onclick="startQuizWithMode('who')">
+              <div class="mode-icon">👤</div>
+              <div class="mode-title">Siapa Saya?</div>
+              <div class="mode-desc">Teka tokoh sejarah</div>
+            </div>
+
+            <div class="mode-card" onclick="startQuizWithMode('timeline')">
+              <div class="mode-icon">🕰️</div>
+              <div class="mode-title">Garis Masa</div>
+              <div class="mode-desc">Tarikh & peristiwa</div>
+            </div>
+
+            <div class="mode-card" onclick="startQuizWithMode('match')">
+              <div class="mode-icon">🔗</div>
+              <div class="mode-title">Padankan</div>
+              <div class="mode-desc">Padankan fakta KSSR</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN 4: KUIZ AKTIF -->
+        <div id="screen-quiz" class="screen">
+          <div class="quiz-top-bar">
+            <button class="btn-back" onclick="confirmExitQuiz()">← Keluar</button>
+            <div class="quiz-meta-info" id="quiz-meta-title">Tahun 4 • Sejarah</div>
+            <div class="quiz-status-pill">
+              <span class="score-box" id="quiz-score-badge">Skor: 0</span>
+              <span class="lives-box" id="quiz-lives-badge">❤️❤️❤️</span>
+            </div>
+          </div>
+
+          <div class="progress-container">
+            <div class="progress-bar" id="quiz-progress-bar"></div>
+          </div>
+
+          <div class="question-box">
+            <span class="question-number" id="quiz-question-counter">Soalan 1 / 10</span>
+            <div class="question-text" id="quiz-question-text">Pemuatan soalan...</div>
+          </div>
+
+          <div class="options-list" id="quiz-options-container">
+            <!-- Dynamic answer options -->
+          </div>
+
+          <div class="feedback-box" id="quiz-feedback-box">
+            <div class="feedback-title" id="quiz-feedback-title">✅ Betul!</div>
+            <div id="quiz-feedback-text">Penerangan fakta sejarah...</div>
+          </div>
+
+          <button class="btn-primary" id="btn-next-question" style="display: none;" onclick="nextQuestion()">
+            SETERUSNYA →
+          </button>
+        </div>
+
+        <!-- SCREEN 5: RESULT ("Kuiz Selesai!" / "Kuiz tamat") -->
+        <div id="screen-result" class="screen">
+          <div class="result-container">
+            <div class="result-trophy">🏆</div>
+            <h2 class="result-title">Kuiz Selesai!</h2>
+            
+            <div class="result-score" id="result-score-display">80 / 100</div>
+            <div class="result-grade" id="result-grade-display">HEBAT!</div>
+            <div class="result-stats" id="result-stats-display">8 betul • 2 salah</div>
+
+            <div class="result-actions">
+              <button class="btn-primary" onclick="retryCurrentQuiz()">CUBA LAGI</button>
+              <button class="btn-secondary" onclick="goToTopicScreen()">PILIH TOPIK LAIN</button>
+              <button class="btn-secondary" onclick="goToHome()">MENU UTAMA</button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Clean Footer -->
+      <footer>
+        WPACADEMY • SYAZWANDANIIAL
+      </footer>
+
+      <!-- Modal Fakta Sejarah -->
+      <div id="modal-facts" class="modal-backdrop" onclick="closeModalOnBg(event, 'modal-facts')">
+        <div class="modal-sheet">
+          <div class="modal-header">
+            <span class="modal-title">📚 Fakta Ringkas Sejarah KSSR</span>
+            <button class="btn-icon" onclick="closeModal('modal-facts')">✕</button>
+          </div>
+          <div class="modal-content" id="facts-container">
+            <div class="fact-card">
+              <strong>Zaman Air Batu (Tahun 4)</strong>
+              Pentas Sunda menghubungkan kepulauan Asia Tenggara sebelum kecairan ais pada Zaman Holosen menenggelamkan tanah rendah.
+            </div>
+            <div class="fact-card">
+              <strong>Kesultanan Melaka (Tahun 4)</strong>
+              Parameswara membuka Melaka sekitar 1400 selepas menyaksikan pelanduk putih menendang anjing perburuannya.
+            </div>
+            <div class="fact-card">
+              <strong>Batu Bersurat Terengganu (Tahun 5)</strong>
+              Bertarikh 1303 Masihi, membuktikan syariat Islam telah bertapak kukuh di Semenanjung Tanah Melayu.
+            </div>
+            <div class="fact-card">
+              <strong>Pejuang Tempatan (Tahun 5)</strong>
+              Rentap menentang Brooke di Sarawak dengan slogan keramat "Agi Idup, Agi Ngelaban".
+            </div>
+            <div class="fact-card">
+              <strong>Pembentukan Malaysia (Tahun 6)</strong>
+              Diisytiharkan pada 16 September 1963 hasil cadangan Tunku Abdul Rahman dan tinjauan Suruhanjaya Cobbold.
+            </div>
+            <div class="fact-card">
+              <strong>Rukun Negara (Tahun 6)</strong>
+              Dibentuk selepas peristiwa 13 Mei 1969 untuk menyatupadukan masyarakat berbilang kaum di Malaysia.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Rekod Skor -->
+      <div id="modal-scores" class="modal-backdrop" onclick="closeModalOnBg(event, 'modal-scores')">
+        <div class="modal-sheet">
+          <div class="modal-header">
+            <span class="modal-title">🏆 Rekod Skor Terkini</span>
+            <button class="btn-icon" onclick="closeModal('modal-scores')">✕</button>
+          </div>
+          <div class="modal-content" id="scores-container">
+            <!-- Dynamic Scores -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Complete Self-Contained JavaScript (No build required, fully offline capable) -->
+    <script>
+      /* --- Audio Synthesizer (Web Audio API) --- */
+      let audioCtx = null;
+      let isAudioMuted = localStorage.getItem('edukuiz_audio_muted') === 'true';
+
+      function initAudio() {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+
+      function updateAudioBtn() {
+        const btn = document.getElementById('btn-audio');
+        if (btn) btn.textContent = isAudioMuted ? '🔇' : '🔊';
+      }
+
+      function toggleAudio() {
+        isAudioMuted = !isAudioMuted;
+        localStorage.setItem('edukuiz_audio_muted', String(isAudioMuted));
+        updateAudioBtn();
+      }
+
+      function playSound(type) {
+        if (isAudioMuted) return;
+        try {
+          initAudio();
+          if (!audioCtx) return;
+          const now = audioCtx.currentTime;
+
+          if (type === 'correct') {
+            const freqs = [523.25, 659.25, 783.99, 1046.50];
+            freqs.forEach((f, idx) => {
+              const osc = audioCtx.createOscillator();
+              const gain = audioCtx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(f, now + idx * 0.06);
+              gain.gain.setValueAtTime(0.08, now + idx * 0.06);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.18);
+              osc.connect(gain);
+              gain.connect(audioCtx.destination);
+              osc.start(now + idx * 0.06);
+              osc.stop(now + idx * 0.06 + 0.2);
+            });
+          } else if (type === 'wrong') {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(240, now);
+            osc.frequency.exponentialRampToValueAtTime(130, now + 0.22);
+            gain.gain.setValueAtTime(0.09, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.23);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.25);
+          } else if (type === 'click') {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(500, now);
+            gain.gain.setValueAtTime(0.05, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.05);
+          } else if (type === 'fanfare') {
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, idx) => {
+              const osc = audioCtx.createOscillator();
+              const gain = audioCtx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(f, now + idx * 0.12);
+              gain.gain.setValueAtTime(0.12, now + idx * 0.12);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.35);
+              osc.connect(gain);
+              gain.connect(audioCtx.destination);
+              osc.start(now + idx * 0.12);
+              osc.stop(now + idx * 0.12 + 0.4);
+            });
+          }
+        } catch (e) {
+          // Audio fallback ignore
+        }
+      }
+
+      /* --- Bank Soalan & Topik KSSR Semakan --- */
+      const TOPICS_DATA = {
+        4: [
+          { id: 't4_all', icon: '🌟', title: 'Semua Topik Tahun 4', sub: 'Koleksi soalan lengkap' },
+          { id: 't4_u1', icon: '📜', title: 'Pengenalan Sejarah', sub: 'Sumber primer & kaedah penyelidikan' },
+          { id: 't4_u5', icon: '❄️', title: 'Zaman Air Batu', sub: 'Pentas Sunda & perubahan bumi' },
+          { id: 't4_u6', icon: '🪨', title: 'Zaman Prasejarah', sub: 'Paleolitik hingga Logam' },
+          { id: 't4_u7', icon: '🏛️', title: 'Kerajaan Melayu Awal', sub: 'Kedah Tua, Gangga Nagara' },
+          { id: 't4_u8', icon: '👑', title: 'Kesultanan Melayu Melaka', sub: 'Parameswara & asal usul' },
+          { id: 't4_u10', icon: '⭐', title: 'Tokoh Terbilang', sub: 'Tun Perak & Hang Tuah' }
+        ],
+        5: [
+          { id: 't5_all', icon: '🌟', title: 'Semua Topik Tahun 5', sub: 'Koleksi soalan lengkap' },
+          { id: 't5_u1', icon: '👑', title: 'Institusi Raja Payung Negara', sub: 'Konsep daulat & raja berpelembagaan' },
+          { id: 't5_u2', icon: '🕌', title: 'Agama Islam di Malaysia', sub: 'Batu Bersurat & kedudukan Islam' },
+          { id: 't5_u3', icon: '🗣️', title: 'Bahasa Melayu Warisan Kita', sub: 'Lingua franca maritim' },
+          { id: 't5_u4', icon: '⚔️', title: 'Kedaulatan Dicabar', sub: 'Campur tangan kuasa barat & Jepun' },
+          { id: 't5_u5', icon: '🛡️', title: 'Pejuang Menentang Penjajah', sub: 'Rentap, Dol Said, Tok Janggut' },
+          { id: 't5_u6', icon: '🇲🇾', title: 'Sejarah Kemerdekaan 1957', sub: 'Detik kemerdekaan & Stadium Merdeka' },
+          { id: 't5_u8', icon: '🌺', title: 'Jalur Gemilang & Jata Negara', sub: 'Maksud lambang & Bunga Raya' }
+        ],
+        6: [
+          { id: 't6_all', icon: '🌟', title: 'Semua Topik Tahun 6', sub: 'Koleksi soalan lengkap' },
+          { id: 't6_u1', icon: '🌏', title: 'Pembentukan Malaysia 1963', sub: 'Gagasan Tunku & 16 September' },
+          { id: 't6_u2', icon: '📍', title: 'Negeri-Negeri di Malaysia', sub: 'Ibu negeri & gelaran ketua negeri' },
+          { id: 't6_u3', icon: '🤝', title: 'Rukun Negara', sub: '5 prinsip tonggak perpaduan' },
+          { id: 't6_u4', icon: '🎉', title: 'Kaum & Perayaan', sub: 'Kepelbagaian kaum & budaya' },
+          { id: 't6_u7', icon: '🎖️', title: 'Pemimpin Negara Disanjung', sub: 'Gelaran jasa Perdana Menteri' },
+          { id: 't6_u8', icon: '🚗', title: 'Kemajuan Ekonomi & Sukan', sub: 'PROTON Saga & Piala Thomas' }
+        ]
+      };
+
+      const QUESTION_BANK = [
+        // --- TAHUN 4 ---
+        {
+          id: 'q1', year: 4, topicId: 't4_u1',
+          q: 'Apakah maksud "Sumber Primer" dalam sejarah?',
+          opts: [
+            'Buku teks yang dicetak semula',
+            'Sumber asli yang belum diolah seperti artifak dan manuskrip',
+            'Cerita khayalan penduduk kampung',
+            'Keratan akhbar ulasan semalam'
+          ],
+          ans: 1, exp: 'Sumber primer ialah sumber asli yang belum diubahsuai seperti artifak, fosil, dan manuskrip.'
+        },
+        {
+          id: 'q2', year: 4, topicId: 't4_u1',
+          q: 'Kaedah mencari peninggalan purba melalui ekskavasi gali cari ialah:',
+          opts: ['Kaedah Lisan', 'Kaedah Bertulis', 'Kaedah Arkeologi', 'Kaedah Lawatan'],
+          ans: 2, exp: 'Kaedah arkeologi mencari tinggalan masa lalu melalui gali cari saintifik.'
+        },
+        {
+          id: 'q3', year: 4, topicId: 't4_u5',
+          q: 'Daratan luas yang menghubungkan Kepulauan Melayu pada Zaman Air Batu ialah:',
+          opts: ['Pentas Sunda', 'Pentas Artik', 'Pentas Pasifik', 'Pentas Eropah'],
+          ans: 0, exp: 'Pentas Sunda pernah mencantumkan kepulauan Asia Tenggara sebelum paras laut naik.'
+        },
+        {
+          id: 'q4', year: 4, topicId: 't4_u6',
+          q: 'Susunan tahap Zaman Prasejarah yang betul dari awal ialah:',
+          opts: [
+            'Paleolitik → Mesolitik → Neolitik → Logam',
+            'Mesolitik → Paleolitik → Logam → Neolitik',
+            'Neolitik → Logam → Paleolitik → Mesolitik',
+            'Logam → Neolitik → Mesolitik → Paleolitik'
+          ],
+          ans: 0, exp: 'Zaman prasejarah bermula dari Paleolitik hingga ke Zaman Logam.'
+        },
+        {
+          id: 'q5', year: 4, topicId: 't4_u7',
+          q: 'Kerajaan Melayu Awal yang berpusat di Lembah Bujang berhampiran Gunung Jerai ialah:',
+          opts: ['Kerajaan Kedah Tua', 'Kerajaan Gangga Nagara', 'Kerajaan Santubong', 'Kerajaan Beruas'],
+          ans: 0, exp: 'Kedah Tua terkenal sebagai pelabuhan dagang di Lembah Bujang berpandukan Gunung Jerai.'
+        },
+        {
+          id: 'q6', year: 4, topicId: 't4_u8',
+          q: 'Siapakah putera dari Palembang yang mengasaskan Melaka sekitar tahun 1400?',
+          opts: ['Tun Perak', 'Parameswara', 'Hang Tuah', 'Sultan Mansur Shah'],
+          ans: 1, exp: 'Parameswara membuka Kesultanan Melayu Melaka yang amat strategik di muara sungai.'
+        },
+        {
+          id: 'q7', year: 4, topicId: 't4_u8',
+          q: 'Peristiwa yang mendorong Parameswara menamakan Melaka ialah:',
+          opts: [
+            'Burung garuda melintasi istana',
+            'Pelanduk putih menendang anjing perburuannya',
+            'Pertembungan harimau dan buaya',
+            'Penemuan keris emas di tepi sungai'
+          ],
+          ans: 1, exp: 'Keberanian pelanduk putih menendang anjingnya membuatkan Parameswara menamakan Melaka sempena pokok tempatnya berteduh.'
+        },
+        {
+          id: 'q8', year: 4, topicId: 't4_u10',
+          q: 'Apakah taktik Tun Perak mengusir tentera Siam di tepi pantai Batu Pahat?',
+          opts: [
+            'Mengikat puntung api pada pokok bakau',
+            'Menenggelamkan semua bot musuh',
+            'Membuat pagar duri buluh tinggi',
+            'Menabur serbuk belerang di laut'
+          ],
+          ans: 0, exp: 'Puntung api pada pokok bakau mengelirukan Siam yang menyangka askar Melaka terlalu ramai.'
+        },
+        {
+          id: 'q9', year: 4, topicId: 't4_u10',
+          q: 'Tugas utama Hang Tuah sebagai Laksamana Melaka ialah:',
+          opts: [
+            'Mengutip cukai kedai',
+            'Mengetuai angkatan tentera laut & mengawal perairan',
+            'Menulis syair istana',
+            'Menjaga pintu gerbang semata-mata'
+          ],
+          ans: 1, exp: 'Laksamana Hang Tuah menjaga keselamatan laluan maritim Melaka dan utusan diraja.'
+        },
+
+        // --- TAHUN 5 ---
+        {
+          id: 'q10', year: 5, topicId: 't5_u1',
+          q: 'Konsep "Daulat" dalam institusi beraja di Malaysia membawa erti:',
+          opts: [
+            'Hukuman penjara istana',
+            'Lambang kekuasaan dan kewibawaan tertinggi seorang raja',
+            'Hadiah emas kepada saudagar',
+            'Cukai tanaman negeri'
+          ],
+          ans: 1, exp: 'Daulat melambangkan kewibawaan dan hak memerintah seorang Raja.'
+        },
+        {
+          id: 'q11', year: 5, topicId: 't5_u2',
+          q: 'Artifak bertarikh 1303 Masihi bukti kedatangan awal Islam di Semenanjung ialah:',
+          opts: ['Batu Bersurat Terengganu', 'Candi Lembah Bujang', 'Mata Wang Melaka', 'Manuskrip Sejarah'],
+          ans: 0, exp: 'Batu Bersurat Terengganu ditemui di Sungai Tembat membuktikan undang-undang Islam diamalkan seawal 1303M.'
+        },
+        {
+          id: 'q12', year: 5, topicId: 't5_u3',
+          q: 'Bahasa Melayu menjadi "Lingua Franca" pada zaman Melaka kerana:',
+          opts: [
+            'Menjadi bahasa perantaraan dan perhubungan utama pedagang pelbagai bangsa',
+            'Hanya golongan bangsawan dibenarkan bertutur',
+            'Diwajibkan oleh pedagang Eropah',
+            'Hanya digunakan dalam surat rahsia'
+          ],
+          ans: 0, exp: 'Lingua franca bermaksud bahasa perantaraan dagang yang difahami secara meluas di pelabuhan Melaka.'
+        },
+        {
+          id: 'q13', year: 5, topicId: 't5_u4',
+          q: 'Kuasa barat manakah yang pertama menjajah Melaka pada tahun 1511?',
+          opts: ['British', 'Belanda', 'Portugis', 'Sepanyol'],
+          ans: 2, exp: 'Portugis diketuai Alfonso de Albuquerque menawan Melaka pada tahun 1511.'
+        },
+        {
+          id: 'q14', year: 5, topicId: 't5_u5',
+          q: 'Pahlawan di Sarawak yang terkenal dengan slogan "Agi Idup, Agi Ngelaban" ialah:',
+          opts: ['Rentap', 'Sharif Masahor', 'Dol Said', 'Mat Salleh'],
+          ans: 0, exp: 'Rentap, pahlawan Iban menentang Brooke di Bukit Sadok dengan ungkapan keramat ini.'
+        },
+        {
+          id: 'q15', year: 5, topicId: 't5_u5',
+          q: 'Dol Said bangkit menentang British di Naning kerana mempertahankan kedaulatan dan:',
+          opts: [
+            'Menolak bayaran cukai satu persepuluh hasil pertanian',
+            'Enggan menjual tanah kepada orang luar',
+            'Ingin membina pelabuhan baharu',
+            'Menuntut gelaran Temenggung'
+          ],
+          ans: 0, exp: 'Dol Said menentang pengenaan cukai 1/10 hasil tani yang dituntut oleh pihak British.'
+        },
+        {
+          id: 'q16', year: 5, topicId: 't5_u6',
+          q: 'Di manakah tarikh kemerdekaan mula diisytiharkan sekembali Tunku dari London?',
+          opts: [
+            'Padang Bandar Hilir, Melaka',
+            'Stadium Merdeka, Kuala Lumpur',
+            'Padang Kota Lama, Pulau Pinang',
+            'Kelab Diraja Selangor'
+          ],
+          ans: 0, exp: 'Tarikh kemerdekaan 31 Ogos 1957 mula diumumkan di Bandar Hilir Melaka pada 20 Februari 1956.'
+        },
+        {
+          id: 'q17', year: 5, topicId: 't5_u6',
+          q: 'Berapa kalikah Tunku Abdul Rahman melaungkan perkataan "MERDEKA!" di Stadium Merdeka?',
+          opts: ['3 kali', '5 kali', '7 kali', '14 kali'],
+          ans: 2, exp: 'Tunku melaungkan perkataan Merdeka sebanyak 7 kali diiringi sorakan rakyat.'
+        },
+        {
+          id: 'q18', year: 5, topicId: 't5_u8',
+          q: 'Lima kelopak Bunga Raya sebagai Bunga Kebangsaan melambangkan:',
+          opts: [
+            '5 prinsip Rukun Negara',
+            '5 buah lautan utama dunia',
+            '5 benua besar',
+            '5 orang Perdana Menteri terawal'
+          ],
+          ans: 0, exp: 'Lima kelopak Bunga Raya merah melambangkan 5 prinsip asas Rukun Negara.'
+        },
+
+        // --- TAHUN 6 ---
+        {
+          id: 'q19', year: 6, topicId: 't6_u1',
+          q: 'Tarikh Pengisytiharan Pembentukan Malaysia yang disambut setiap tahun ialah:',
+          opts: ['31 Ogos 1957', '16 September 1963', '13 Mei 1969', '1 Januari 1970'],
+          ans: 1, exp: 'Malaysia diisytiharkan pada 16 September 1963 menggabungkan Tanah Melayu, Sabah, Sarawak & Singapura.'
+        },
+        {
+          id: 'q20', year: 6, topicId: 't6_u1',
+          q: 'Suruhanjaya Cobbold ditubuhkan pada tahun 1962 bertujuan untuk:',
+          opts: [
+            'Meninjau pandangan penduduk Sabah dan Sarawak tentang Malaysia',
+            'Mencetak mata wang ringgit pertama',
+            'Membina lapangan terbang Borneo',
+            'Menandatangani perjanjian sempadan laut'
+          ],
+          ans: 0, exp: 'Suruhanjaya Cobbold meninjau pandangan rakyat Sabah dan Sarawak sebelum gagasan direalisasikan.'
+        },
+        {
+          id: 'q21', year: 6, topicId: 't6_u2',
+          q: 'Ketua negeri di Negeri Sembilan memakai gelaran:',
+          opts: ['Sultan', 'Yang di-Pertuan Besar', 'Raja', 'Yang di-Pertua Negeri'],
+          ans: 1, exp: 'Mengikut Adat Perpatih di Negeri Sembilan, ketua negeri digelar Yang di-Pertuan Besar.'
+        },
+        {
+          id: 'q22', year: 6, topicId: 't6_u3',
+          q: 'Apakah prinsip ke-3 dalam 5 prinsip Rukun Negara?',
+          opts: [
+            'Kepercayaan kepada Tuhan',
+            'Kesetiaan kepada Raja dan Negara',
+            'Keluhuran Perlembagaan',
+            'Kedaulatan Undang-Undang'
+          ],
+          ans: 2, exp: 'Prinsip ke-3 ialah Keluhuran Perlembagaan, undang-undang tertinggi negara.'
+        },
+        {
+          id: 'q23', year: 6, topicId: 't6_u4',
+          q: 'Pesta Kaamatan disambut tanda kesyukuran menuai padi oleh etnik:',
+          opts: ['Kadazandusun di Sabah', 'Iban di Sarawak', 'Baba Nyonya Melaka', 'Orang Asli Temiar'],
+          ans: 0, exp: 'Masyarakat Kadazandusun di Sabah menyambut Tadau Kaamatan pada bulan Mei.'
+        },
+        {
+          id: 'q24', year: 6, topicId: 't6_u7',
+          q: 'Tun Abdul Razak Hussein dikenang sebagai pemimpin yang bergelar:',
+          opts: ['Bapa Kemerdekaan', 'Bapa Pembangunan', 'Bapa Perpaduan', 'Bapa Pemodenan'],
+          ans: 1, exp: 'Tun Abdul Razak bergelar Bapa Pembangunan atas usaha memajukan luar bandar melalui FELDA dan DEB.'
+        },
+        {
+          id: 'q25', year: 6, topicId: 't6_u8',
+          q: 'Kereta nasional pertama buatan Malaysia yang dilancarkan pada tahun 1985 ialah:',
+          opts: ['Proton Wira', 'Proton Saga', 'Perodua Kancil', 'Proton Iswara'],
+          ans: 1, exp: 'Proton Saga dilancarkan pada 9 Julai 1985 sebagai lambang kemajuan industri automotif negara.'
+        },
+        {
+          id: 'q26', year: 6, topicId: 't6_u8',
+          q: 'Pada tahun 1992, pasukan badminton Malaysia menjulang kejuaraan dunia berprestij iaitu:',
+          opts: ['Piala Thomas', 'Piala Uber', 'Piala Sudirman', 'Sukan Komanwel'],
+          ans: 0, exp: 'Skuad badminton negara diketuai adik-beradik Sidek memenangi Piala Thomas 1992 di Kuala Lumpur.'
+        }
+      ];
+
+      /* --- App State --- */
+      let currentYear = 4;
+      let currentTopic = 't4_all';
+      let currentTopicTitle = 'Semua Topik';
+      let currentMode = 'mcq';
+
+      let activeQuestions = [];
+      let currentQIndex = 0;
+      let score = 0;
+      let lives = 3;
+      let correctCount = 0;
+      let wrongCount = 0;
+      let isAnswerLocked = false;
+
+      /* --- Navigation Functions --- */
+      function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById(screenId);
+        if (target) {
+          target.classList.add('active');
+          window.scrollTo(0, 0);
+        }
+      }
+
+      function goToHome() {
+        playSound('click');
+        showScreen('screen-home');
+      }
+
+      function selectYear(yr) {
+        playSound('click');
+        currentYear = yr;
+        renderTopicScreen();
+        showScreen('screen-topic');
+      }
+
+      function goToTopicScreen() {
+        playSound('click');
+        renderTopicScreen();
+        showScreen('screen-topic');
+      }
+
+      function renderTopicScreen() {
+        const header = document.getElementById('topic-screen-header');
+        header.textContent = `Tahun ${currentYear} • Pilih Topik`;
+
+        const container = document.getElementById('topic-list-container');
+        container.innerHTML = '';
+
+        const topics = TOPICS_DATA[currentYear] || [];
+        topics.forEach(t => {
+          const div = document.createElement('div');
+          div.className = 'topic-card';
+          div.onclick = () => selectTopic(t.id, t.title);
+          div.innerHTML = `
+            <div class="topic-icon">${t.icon}</div>
+            <div style="flex:1;">
+              <div class="topic-title">${t.title}</div>
+              <span class="topic-sub">${t.sub}</span>
+            </div>
+            <div style="font-size:12px; color:#94a3b8; font-weight:bold;">→</div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      function selectTopic(topicId, topicTitle) {
+        playSound('click');
+        currentTopic = topicId;
+        currentTopicTitle = topicTitle;
+
+        const modeHeader = document.getElementById('mode-screen-header');
+        modeHeader.textContent = `Tahun ${currentYear} • ${topicTitle}`;
+        showScreen('screen-mode');
+      }
+
+      function startQuickChallenge() {
+        playSound('click');
+        currentYear = 4;
+        currentTopic = 'quick';
+        currentTopicTitle = 'Cabaran Kuiz Sejarah';
+        startQuizWithMode('speed');
+      }
+
+      /* --- Mode & Quiz Initializer --- */
+      function startQuizWithMode(mode) {
+        playSound('click');
+        currentMode = mode;
+
+        let pool = [];
+        if (currentTopic === 'quick') {
+          pool = [...QUESTION_BANK].sort(() => 0.5 - Math.random()).slice(0, 10);
+        } else if (currentTopic.endsWith('_all')) {
+          pool = QUESTION_BANK.filter(q => q.year === currentYear);
+        } else {
+          pool = QUESTION_BANK.filter(q => q.year === currentYear && q.topicId === currentTopic);
+          if (pool.length < 5) {
+            const extra = QUESTION_BANK.filter(q => q.year === currentYear && q.topicId !== currentTopic);
+            pool = [...pool, ...extra].slice(0, 6);
+          }
+        }
+
+        // Shuffle
+        activeQuestions = [...pool].sort(() => 0.5 - Math.random());
+        if (mode === 'speed' || activeQuestions.length > 10) {
+          activeQuestions = activeQuestions.slice(0, 10);
+        }
+
+        // Adapt question format for mode
+        if (mode === 'tf') {
+          activeQuestions = activeQuestions.map(q => {
+            const isCorrect = Math.random() > 0.4;
+            const chosenOpt = isCorrect ? q.opts[q.ans] : q.opts[(q.ans + 1) % q.opts.length];
+            return {
+              id: q.id,
+              q: `Adakah penyataan ini BENAR atau PALSU?\n"${chosenOpt}" ialah fakta bagi: ${q.q}`,
+              opts: ['BENAR (Betul)', 'PALSU (Salah)'],
+              ans: isCorrect ? 0 : 1,
+              exp: q.exp
+            };
+          });
+        } else if (mode === 'who') {
+          activeQuestions = activeQuestions.filter(q => q.q.includes('Siapakah') || q.q.includes('Tokoh') || q.q.includes('Laksamana') || q.q.includes('Pahlawan'));
+          if (activeQuestions.length === 0) {
+            activeQuestions = QUESTION_BANK.filter(q => q.year === currentYear).slice(0, 5);
+          }
+        }
+
+        currentQIndex = 0;
+        score = 0;
+        lives = 3;
+        correctCount = 0;
+        wrongCount = 0;
+        isAnswerLocked = false;
+
+        document.getElementById('quiz-meta-title').textContent = `Tahun ${currentYear} • ${currentTopicTitle}`;
+        updateQuizHeader();
+        showScreen('screen-quiz');
+        renderQuestion();
+      }
+
+      function updateQuizHeader() {
+        document.getElementById('quiz-score-badge').textContent = `Skor: ${score}`;
+        const hearts = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 3 - lives));
+        document.getElementById('quiz-lives-badge').textContent = hearts;
+
+        const progressPercent = ((currentQIndex + 1) / activeQuestions.length) * 100;
+        document.getElementById('quiz-progress-bar').style.width = `${progressPercent}%`;
+      }
+
+      function renderQuestion() {
+        isAnswerLocked = false;
+        const q = activeQuestions[currentQIndex];
+
+        document.getElementById('quiz-question-counter').textContent = `Soalan ${currentQIndex + 1} / ${activeQuestions.length}`;
+        document.getElementById('quiz-question-text').textContent = q.q;
+
+        const feedbackBox = document.getElementById('quiz-feedback-box');
+        feedbackBox.className = 'feedback-box';
+        feedbackBox.style.display = 'none';
+
+        document.getElementById('btn-next-question').style.display = 'none';
+
+        const optContainer = document.getElementById('quiz-options-container');
+        optContainer.innerHTML = '';
+
+        const letters = ['A', 'B', 'C', 'D'];
+        q.opts.forEach((optText, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'btn-option';
+          btn.onclick = () => handleAnswer(idx);
+          btn.innerHTML = `
+            <span class="opt-letter">${letters[idx] || (idx + 1)}</span>
+            <span style="flex:1;">${optText}</span>
+          `;
+          optContainer.appendChild(btn);
+        });
+
+        updateQuizHeader();
+      }
+
+      function handleAnswer(selectedIndex) {
+        if (isAnswerLocked) return;
+        isAnswerLocked = true;
+
+        const q = activeQuestions[currentQIndex];
+        const isCorrect = selectedIndex === q.ans;
+        const optButtons = document.querySelectorAll('.btn-option');
+
+        optButtons.forEach((btn, idx) => {
+          btn.disabled = true;
+          if (idx === q.ans) {
+            btn.classList.add('correct');
+          } else if (idx === selectedIndex && !isCorrect) {
+            btn.classList.add('wrong');
+          }
+        });
+
+        const feedbackBox = document.getElementById('quiz-feedback-box');
+        const feedbackTitle = document.getElementById('quiz-feedback-title');
+        const feedbackText = document.getElementById('quiz-feedback-text');
+
+        if (isCorrect) {
+          playSound('correct');
+          score += 10;
+          correctCount++;
+          feedbackBox.className = 'feedback-box correct';
+          feedbackTitle.textContent = '✅ Betul!';
+        } else {
+          playSound('wrong');
+          lives--;
+          wrongCount++;
+          feedbackBox.className = 'feedback-box wrong';
+          feedbackTitle.textContent = '❌ Belum tepat';
+        }
+
+        feedbackText.textContent = q.exp || 'Teruskan usaha anda dalam memahami fakta sejarah KSSR!';
+        feedbackBox.style.display = 'block';
+
+        updateQuizHeader();
+
+        // Check if out of lives
+        if (lives <= 0) {
+          setTimeout(() => {
+            endQuiz(true);
+          }, 1400);
+          return;
+        }
+
+        document.getElementById('btn-next-question').style.display = 'inline-flex';
+      }
+
+      function nextQuestion() {
+        playSound('click');
+        if (currentQIndex + 1 < activeQuestions.length) {
+          currentQIndex++;
+          renderQuestion();
+        } else {
+          endQuiz(false);
+        }
+      }
+
+      function confirmExitQuiz() {
+        playSound('click');
+        if (confirm('Adakah anda pasti mahu keluar dari kuiz ini?')) {
+          goToHome();
+        }
+      }
+
+      function endQuiz(isGameOver) {
+        playSound('fanfare');
+        const total = activeQuestions.length;
+        const totalPossibleScore = total * 10;
+        const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+        document.getElementById('result-score-display').textContent = `${score} / ${totalPossibleScore}`;
+
+        let grade = 'HEBAT!';
+        if (accuracy >= 90) grade = 'SEJARAWAN CEMERLANG!';
+        else if (accuracy >= 70) grade = 'SANGAT BAIK!';
+        else if (accuracy >= 50) grade = 'USAHA YANG GIGIH!';
+        else grade = 'JANGAN PUTUS ASA!';
+
+        document.getElementById('result-grade-display').textContent = grade;
+        document.getElementById('result-stats-display').textContent = `${correctCount} betul • ${wrongCount} salah`;
+
+        // Save to localStorage
+        try {
+          const raw = localStorage.getItem('edukuiz_saved_scores');
+          const list = raw ? JSON.parse(raw) : [];
+          list.unshift({
+            date: new Date().toLocaleDateString('ms-MY'),
+            title: `Tahun ${currentYear} • ${currentTopicTitle}`,
+            score: score,
+            total: totalPossibleScore,
+            correct: correctCount,
+            wrong: wrongCount
+          });
+          localStorage.setItem('edukuiz_saved_scores', JSON.stringify(list.slice(0, 15)));
+        } catch (e) {}
+
+        showScreen('screen-result');
+      }
+
+      function retryCurrentQuiz() {
+        playSound('click');
+        startQuizWithMode(currentMode);
+      }
+
+      /* --- Modal Handlers --- */
+      function openModal(id) {
+        playSound('click');
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.classList.add('open');
+          if (id === 'modal-scores') renderScoreHistory();
+        }
+      }
+
+      function closeModal(id) {
+        playSound('click');
+        const modal = document.getElementById(id);
+        if (modal) modal.classList.remove('open');
+      }
+
+      function closeModalOnBg(e, id) {
+        if (e.target.id === id) closeModal(id);
+      }
+
+      function renderScoreHistory() {
+        const container = document.getElementById('scores-container');
+        try {
+          const raw = localStorage.getItem('edukuiz_saved_scores');
+          const list = raw ? JSON.parse(raw) : [];
+          if (list.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:#94a3b8;">Belum ada rekod kuiz. Jawab kuiz untuk simpan skor anda!</div>';
+            return;
+          }
+          container.innerHTML = list.map(item => `
+            <div class="fact-card" style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong>${item.title}</strong>
+                <span style="font-size:11px; color:#64748b;">${item.correct} betul • ${item.date}</span>
+              </div>
+              <div style="font-size:15px; font-weight:800; color:#b45309;">${item.score} Mata</div>
+            </div>
+          `).join('');
+        } catch (e) {
+          container.innerHTML = 'Tiada rekod.';
+        }
+      }
+
+      // Initialize on load
+      window.addEventListener('DOMContentLoaded', () => {
+        updateAudioBtn();
+      });
+    </script>
+  </body>
+</html>
